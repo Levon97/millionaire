@@ -12,10 +12,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       last_question_id: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        references: {
+         model: 'Questions',
+          key: 'id'
+        }
       },
       active : {
-        type: Sequelize.BOOL
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
