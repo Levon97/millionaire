@@ -14,8 +14,34 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   GameUserMap.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    game_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Game',
+        key: 'id'
+      }
+    },
+    question_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Question',
+        key: 'id'
+      }
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'GameUserMap',

@@ -14,8 +14,26 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Question.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    lvl: {
+      type: DataTypes.INTEGER
+    },
+    content: {
+      type: DataTypes.STRING
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'Question',
