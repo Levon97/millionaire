@@ -1,6 +1,5 @@
 const {Sequelize,DataTypes} = require('sequelize');
 const dbConfigs = require("../config/dbconfigs");
-const user = require('./user');
 
 // creatting sequelize connection to db
 const sequelize = new Sequelize(dbConfigs.DB, dbConfigs.USER, dbConfigs.PASSWORD, {
