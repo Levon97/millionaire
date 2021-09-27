@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Question.belongsToMany(models.Game, { through: 'UserTeamMaps', foreignKey: 'question_id' });
     }
   };
   Question.init({
@@ -26,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       type: DataTypes.STRING
     },
-    createdAt: {
+    created_at: {
       allowNull: false,
       type: DataTypes.DATE
     },
-    updatedAt: {
+    updated_at: {
       allowNull: false,
       type: DataTypes.DATE
     }

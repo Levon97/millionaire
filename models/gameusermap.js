@@ -22,23 +22,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     game_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'Game',
-        key: 'id'
-      }
     },
     question_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'Question',
-        key: 'id'
-      }
     },
-    createdAt: {
+    created_at: {
       allowNull: false,
       type: DataTypes.DATE
     },
-    updatedAt: {
+    updated_at: {
       allowNull: false,
       type: DataTypes.DATE
     }

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Answer.hasMany(models.Question,{foreignKey: 'question_id'});
     }
   };
   Answer.init({
@@ -22,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     question_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'Question',
-        key: 'id'
-      }
     },
     content: {
       type: DataTypes.STRING
@@ -34,11 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    createdAt: {
+    created_at: {
       allowNull: false,
       type: DataTypes.DATE
     },
-    updatedAt: {
+    updated_at: {
       allowNull: false,
       type: DataTypes.DATE
     }

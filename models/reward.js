@@ -26,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     award: {
       type: DataTypes.STRING
     },
-    createdAt: {
+    created_at: {
       allowNull: false,
       type: DataTypes.DATE
     },
-    updatedAt: {
+    updated_at: {
       allowNull: false,
       type: DataTypes.DATE
     }

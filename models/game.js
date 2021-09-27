@@ -10,8 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-    }
+      Game.hasMany(models.User, {foreignKey: 'user_id'});
+      Game.hasMany(models.Question, {foreignKey: 'last_question_id'})
+      Game.belongsToMany(models.Question, { through: 'GameUserMap', foreignKey: 'game_id' });    }
   };
   Game.init({
     id: {
@@ -29,20 +30,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     last_question_id: {
       type: DataTypes.INTEGER,
-      references: {
-       model: 'Question',
-        key: 'id'
-      }
     },
     active : {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    createdAt: {
+    created_at: {
       allowNull: false,
       type: DataTypes.DATE
     },
-    updatedAt: {
+    updated_at: {
       allowNull: false,
       type: DataTypes.DATE
     }

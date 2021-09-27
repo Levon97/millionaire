@@ -1,8 +1,7 @@
 
-const express = require("express");
-const cors = require("cors");
-const app = express();
-const port = process.env.PORT;
+//just testing 
 
-app.use(cors());
-app.post()
+require('dotenv').config();
+const {User,Reward, Question,GameUserMap,Answer,} = require('./models/index');
+
+console.log({User,Reward, Question,GameUserMap,Answer,} );

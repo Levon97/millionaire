@@ -1,16 +1,16 @@
 const {Sequelize,DataTypes} = require('sequelize');
-const dbConfigs = require("../config/dbconfigs");
+const config = require("../config/config");
 
 // creatting sequelize connection to db
-const sequelize = new Sequelize(dbConfigs.DB, dbConfigs.USER, dbConfigs.PASSWORD, {
-    host: dbConfigs.HOST,
-    dialect: dbConfigs.dialect,
+const sequelize = new Sequelize(config.database, config.user, config.password, {
+    host: config.host,
+    dialect: config.dialect,
 
     pool: {
-        max: dbConfigs.pool.max,
-        min: dbConfigs.pool.min,
-        acquire: dbConfigs.pool.acquire,
-        idle: dbConfigs.pool.idle
+        max: config.pool.max,
+        min: config.pool.min,
+        acquire: config.pool.acquire,
+        idle: config.pool.idle
   }
 });
 
@@ -23,12 +23,12 @@ const Game = require('./game')(sequelize,DataTypes);
 const GameUserMap = require('./gameusermap')(sequelize,DataTypes);
 
 // Associations 
-Reward.hasMany(User, {foreignKey: 'user_id'});
-Answer.hasMany(Question,{foreignKey: 'question_id'});
-Game.hasMany(User, {foreignKey: 'user_id'});
-Game.hasMany(Question, {foreignKey: 'last_question_id'})
-Game.belongsToMany(Question, { through: 'GameUserMap', foreignKey: 'game_id' });
-Question.belongsToMany(Game, { through: 'UserTeamMaps', foreignKey: 'question_id' });
+// Reward.hasMany(User, {foreignKey: 'user_id'});
+// Answer.hasMany(Question,{foreignKey: 'question_id'});
+// Game.hasMany(User, {foreignKey: 'user_id'});
+// Game.hasMany(Question, {foreignKey: 'last_question_id'})
+// Game.belongsToMany(Question, { through: 'GameUserMap', foreignKey: 'game_id' });
+// Question.belongsToMany(Game, { through: 'UserTeamMaps', foreignKey: 'question_id' });
 
 //exporting models 
 module.exports={
