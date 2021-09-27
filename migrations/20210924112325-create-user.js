@@ -14,6 +14,14 @@ module.exports = {
       last_name: {
         type: Sequelize.STRING
       },
+      email: {
+        allowNull: false,
+        type: Sequelize.STRING(80)
+      },
+      password: {
+        allowNull: false,
+        type: Sequelize.CHAR(60)
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
