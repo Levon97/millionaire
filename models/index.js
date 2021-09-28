@@ -1,8 +1,8 @@
-const {Sequelize,DataTypes} = require('sequelize');
+const {Sequelize,DataTypes,QueryTypes} = require('sequelize');
 const config = require("../config/config");
 
 // creatting sequelize connection to db
-const sequelize = new Sequelize(config.database, config.user, config.password, {
+const sequelize = new Sequelize(config.database, config.username, config.password, {
     host: config.host,
     dialect: config.dialect,
 
@@ -32,6 +32,8 @@ const GameUserMap = require('./gameusermap')(sequelize,DataTypes);
 
 //exporting models 
 module.exports={
+  sequelize,
+  QueryTypes,
   User,
   Reward,
   Question,
