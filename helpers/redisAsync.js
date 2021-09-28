@@ -1,11 +1,7 @@
-const {promisify} = require('util');
-const client = require('redis').createClient({
-    host: process.env.REDISHOST,
-    port: process.env.REDISPORT
-});
+const {Promise} = require('bluebird');
+const client = Promise.promisifyAll(require('redis').createClient({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT
+}));
 
-const redisAsinc = promisify(client);
-
-async function gago(){
-    await redisAsinc.get
-}
+module.exports = client;
