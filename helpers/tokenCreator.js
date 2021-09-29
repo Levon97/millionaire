@@ -1,15 +1,16 @@
-const {promisify} = require('util')
-
-const randomBytesAsync = promisify(require('crypto').randomBytes);
+const {Promise} = require('bluebird');
+const crypto = Promise.promisifyAll(require('crypto'));
 
 async function getToken(size){
-    const key = await randomBytesAsync(size);
+    
+    const key = await crypto.randomBytesAsync(size);
+    console.log(key.toString('hex'));
     return key.toString('hex');
 }
+getToken(64);
 
-async function TgetToken(){
-    const key = await randomBytesAsync(60);
-    console.log(key.toString('hex'));
-}
+module.exports = {
+    getToken,
+    crypto
+};
 
-TgetToken();
