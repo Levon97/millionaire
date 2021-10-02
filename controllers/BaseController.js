@@ -1,26 +1,52 @@
 class BaseController {
-    constructor(deps) {
-        this.deps = deps;
-    }
 
     errorHandler = (err, res) => {
+        let code;
+        let message;
         const name = err.name;
         console.log(name);
         switch (name) {
             case "ValidationError":
-                res.status(400).json({ error: err.message });
+                code = 400;
+                message = err.message;
                 break;
             case "EmailExistError":
-                res.status(400).json({ error: "Email already exists" });
+                code = 400;
+                message = "Email already exists"
                 break;
             case "wrongPass":
-                res.status(401).json({ error: 'Wrong password' });
+                code = 401;
+                message = 'Wrong password';s
             default:
-                res.status(400).json({ error: "Bad request" });
+                code = 400;
+                message = err.message || "Bad request"
                 break;
         }
+         this.resSender(code, {error: message},res);
     }
-    
+
+    // successHandler = (reason, res) => {
+    //     let code;
+    //     let dataContent;
+    //     switch (reason) {
+    //         case "logIn":
+    //             code = 200;
+    //             dataContent = "sign-in success"
+    //             break;
+    //         case "logIn":
+    //             code = 200;
+    //             dataContent = "sign-in success"
+    //             break;
+        
+    //         default:
+    //             break;
+    //     }
+    //     this.resSender()
+    // }
+
+    resSender = (code, sendData,res) => {
+       return res.status(code).json(sendData);
+    }
 
 }
 
