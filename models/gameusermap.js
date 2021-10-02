@@ -26,15 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     question_id: {
       type: DataTypes.INTEGER,
     },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updated_at: {
-      allowNull: false,
-      type: DataTypes.DATE
-    }
   }, {
+    underscored: true,
     sequelize,
     modelName: 'GameUserMap',
   });

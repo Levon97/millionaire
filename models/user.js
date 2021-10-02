@@ -34,15 +34,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.CHAR(60)
     },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updated_at: {
-      allowNull: false,
-      type: DataTypes.DATE
-    }
+    
   }, {
+    hooks: {
+      afterCreate: (record) => {
+          delete record.dataValues.password;
+      },
+      afterUpdate: (record) => {
+          delete record.dataValues.password;
+      },
+  },
+    underscored: true,
     sequelize,
     modelName: 'User',
   });

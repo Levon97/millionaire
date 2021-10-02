@@ -1,8 +1,27 @@
-module.exports =  class BaseController {
-     errorHandler = (error,res) => {
-        if(error.details[0].message){
-            console.log(error.details[0].message);
-            return res.status(400).json( {error: joiError.details[0].message})
-        }else if(error)
+class BaseController {
+    constructor(deps) {
+        this.deps = deps;
     }
+
+    errorHandler = (err, res) => {
+        const name = err.name;
+        console.log(name);
+        switch (name) {
+            case "ValidationError":
+                res.status(400).json({ error: err.message });
+                break;
+            case "EmailExistError":
+                res.status(400).json({ error: "Email already exists" });
+                break;
+            case "wrongPass":
+                res.status(401).json({ error: 'Wrong password' });
+            default:
+                res.status(400).json({ error: "Bad request" });
+                break;
+        }
+    }
+    
+
 }
+
+module.exports = BaseController;

@@ -35,15 +35,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    created_at: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updated_at: {
-      allowNull: false,
-      type: DataTypes.DATE
-    }
   }, {
+    underscored: true,
     sequelize,
     modelName: 'Game',
   });
