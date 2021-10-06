@@ -1,10 +1,10 @@
 const BaseController = require('./BaseController');
 const {User} = require('../models/index');
-const {crypto,tokeCreator} = require('../helpers/tokenCreator');
+const {crypto,tokenCreator} = require('../helpers/tokenCreator');
 const redisCli = require('../helpers/redisAsync');
 const AuthValidation = require('../validations/AuthValidation');
 const { hash,verify} =  require('../helpers/PassConverter');
-const {ValidationError,EmailError,VrongPassError} = require('../modules/customErrors');
+const {ValidationError,EmailError,WrongPassError} = require('../modules/customErrors');
 
 
 module.exports = class AuthController extends BaseController {
@@ -25,7 +25,7 @@ module.exports = class AuthController extends BaseController {
         //   creating user and saving on db
         const regUser = await User.create({
             first_name: req.body.first_name,
-            last_Name: req.body.last_name,
+            last_name: req.body.last_name,
             email:req.body.email,
             password: hashedPass,
             });
@@ -43,20 +43,16 @@ module.exports = class AuthController extends BaseController {
         if (error) throw new ValidationError(error.details[0].message);
         
         // checking is there a user with inputed email
-        const isEmailExist = await User.findOne({ where: { email: req.body.email } });
-        if (!isEmailExist) throw new EmailError("User with this email not found");
+        const user = await User.findOne({ where: { email: req.body.email } });
+        if (!user) throw new EmailError("User with this email not found");
         
         const validPassword = await verify(req.body.password, user.password)
-        if(!validPassword) throw new VrongPassError("wrong inputed password");
+        if(!validPassword) throw new WrongPassError("wrong inputed password");
         
         
-            const token = await tokeCreator(48);
-            await redisCli.setAsync(token, req.body.email, 'EX', 60*60);  
-            res.json({
-                error: null,
-                data: {
-                    token,
-                },
+            const token = await tokenCreator(48);
+            await redisCli.setAsync(token, user.user_id, 'EX', 60*60);  
+            res.status(200).json({data: { token},
             });
         } catch (error) {
             this.errorHandler(error,res);

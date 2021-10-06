@@ -6,11 +6,11 @@ async function verifyToken(req,res,next) {
     const validToken = req.header('auth-token');
     if(!validToken) return res.status(401).json({error: 'Unauthorized'});
 
-    const email = await redisCli.getAsync(validToken);
-    if(!email) return res.status(401).json({error: 'Unauthorized'})
+    const userId = await redisCli.getAsync(validToken);
+    if(!userId) return res.status(401).json({error: 'Unauthorized'})
 
     try {
-        req.email = email;
+        req.userId = userId;
         req.validToken = validToken;
     next()
     } catch (error) {

@@ -13,11 +13,11 @@ class EmailError extends Error{
     }
 }
 
-class VrongPassError extends Error{
+class WrongPassError extends Error{
     constructor(message){
         super(message)
-        this.name = 'VrongPassError'
+        this.name = 'WrongPassError'
     }
 }
 
-module.exports = {ValidationError,EmailError,VrongPassError};
+module.exports = {ValidationError,EmailError,WrongPassError};
