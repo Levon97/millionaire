@@ -30,7 +30,10 @@ const PassConverter = require('./helpers/PassConverter');
 // errorer();
 
 async function gag( ){
-    console.log(await PassConverter.hash("gag"));
+    db = {gsg: "mag"};
+    
+
+    console.log(db["mag"]);
     
 }
 

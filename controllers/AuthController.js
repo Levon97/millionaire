@@ -51,8 +51,8 @@ module.exports = class AuthController extends BaseController {
         
         
             const token = await tokenCreator(48);
-            await redisCli.setAsync(token, user.user_id, 'EX', 60*60);  
-            res.status(200).json({data: { token},
+            await redisCli.setAsync(token, user.id, 'EX', 60*60);  
+            res.status(200).json({data: token,
             });
         } catch (error) {
             this.errorHandler(error,res);

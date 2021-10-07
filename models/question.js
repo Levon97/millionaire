@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Question.belongsToMany(models.Game, { through: 'UserTeamMaps', foreignKey: 'question_id' });
+      Question.hasMany(models.Answer,{foreignKey: 'question_id'})
     }
   };
   Question.init({

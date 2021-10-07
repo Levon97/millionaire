@@ -1,11 +1,10 @@
 const router = require('express').Router();
-const GameController = require('../controllers/GameControler');
-const verifyToken = require('../middlewares/tokenValidation');
+const GameController = require('../controllers/GameController');
+// const verifyToken = require('../middlewares/tokenValidation');
 const GameControler = new GameController();
 
-router.use(verifyToken);
-router.get('/:user_id/:lvl', profileController.logOut);
-// router.get('/profile', profileController.profileData);
-// router.post(./)
+// router.use(verifyToken);
+router.get('/start-game', GameControler.startGame);
+
 
 module.exports = router;

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Answer.hasMany(models.Question,{foreignKey: 'question_id'});
+      Answer.hasOne(models.Question,{foreignKey: 'question_id'});
     }
   };
   Answer.init({
@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
   }, {
+    scopes: {
+      withoutResponse: {
+        attributes: { exclude: ['response'] },
+      }
+    },
     underscored: true,
     sequelize,
     modelName: 'Answer',

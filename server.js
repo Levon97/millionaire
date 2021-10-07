@@ -5,13 +5,15 @@ const cors = require('cors');
 const app = express();
 const authRouts = require('./routes/authRouts');
 const profileRouts = require('./routes/profileRouts');
+const gameRoutes = require('./routes/gameRouts');
 const port = process.env.PORT || 3001;
 const {User} = require("./models/index");
 
 app.use(cors());
 app.use(express.json());
 app.use('/', authRouts);
-app.use('/',profileRouts);
+// app.use('/',profileRouts);
+app.use('/',gameRoutes)
 
 try {
   app.listen(port, () => {
