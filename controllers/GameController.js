@@ -53,10 +53,8 @@ class GameController extends BaseController {
 
     }
     startGame = async (req, res) => {
-        const test = await Question.findOne({ logging: true,
-            attributes: {exclude: ['question_id']},
-         where: { id: 5 },
-          include: [{model: Answer}]})
+        const test = await Question.findOne({ logging: true, where: { id: 5 },include: {model: Answer.scope('withoutResponse')}})
+        res.json({data: test});
         
     }
 

@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Game.hasMany(models.User, {foreignKey: 'user_id'});
-      // Game.hasMany(models.Question, {foreignKey: 'last_question_id'})
+      Game.hasMany(models.User, {foreignKey: 'id'});
+      Game.hasMany(models.Question, {foreignKey: 'id'})
       Game.belongsToMany(models.Question, { through: 'GameUserMap', foreignKey: 'game_id' });    }
   };
   Game.init({
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     active : {
       type: DataTypes.BOOLEAN,
       defaultValue: false
-    },
+    }
   }, {
     underscored: true,
     sequelize,
