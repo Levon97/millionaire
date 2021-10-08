@@ -16,17 +16,21 @@ class BaseController {
                 break;
             case "wrongPass":
                 code = 401;
-                message = 'Wrong password';s
+                message = 'Wrong password'; 
             default:
                 code = 400;
                 message = err.message || "Bad request"
                 break;
         }
-         this.resSender(code, {error: message},res);
+        this.resSender(code, { error: message }, res);
     }
-
-    resSender = (code, sendData,res) => {
-       return res.status(code).json(sendData);
+s
+    resSender = (code, sendData, res) => {
+        return res.status(code).json(sendData);
+    }
+    
+    getQuestion = async (searchParamObj,Question,Answer) => {
+        return await Question.findOne({where: searchParamObj,include: {model: Answer.scope('withoutResponse')}})
     }
 
 }

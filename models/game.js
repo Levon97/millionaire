@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     active : {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: true
     }
   }, {
     underscored: true,
