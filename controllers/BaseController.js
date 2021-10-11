@@ -15,13 +15,16 @@ class BaseController {
                 break;
             case "wrongPass":
                 code = 401;
-                message = 'Wrong password'; 
+                message = 'Wrong password';
+            case "UnauthorizedError":
+                code = 401;
+                message = 'Unauthorized'
             default:
                 code = 400;
                 message = err.message || "Bad request"
                 break;
         }
-        res.status(code).json({error: message});
+        res.status(code).json({ error: message });
     }
 
 }

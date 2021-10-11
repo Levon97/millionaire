@@ -1,22 +1,22 @@
 const redisCli = require('../helpers/redisAsync');
+const { UnauthorizedError } = require('../modules/customErrors');
 
 // Token validation middleware 
-async function verifyToken(req,res,next) {
-    
-    const validToken = req.header('auth-token');
-    if(!validToken) return res.status(401).json({error: 'Unauthorized'});
-
-    const userId = await redisCli.getAsync(validToken);
-    if(!userId) return res.status(401).json({error: 'Unauthorized'})
-
+async function verifyToken(req, res, next) {
     try {
+        const validToken = req.header('auth-token');
+        if (!validToken) throw new UnauthorizedError('Unauthorized');
+
+        const userId = await redisCli.getAsync(validToken);
+        if (!userId) throw new UnauthorizedError('Unauthorized');
+
         req.userId = userId;
         req.validToken = validToken;
-    next()
+        next()
     } catch (error) {
-        res.status(400).json({ error: "Token is not valid" });
+        res.status(401).json({ error: error.message });
     }
-    
+
 }
 
 module.exports = verifyToken;
