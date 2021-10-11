@@ -7,19 +7,19 @@ class GameController extends BaseController {
     // Start game Function for /start-game
     startGame = async (req, res) => {
         try {
-            
+
             const activeRound = await models.Game.findOne({ where: { active: true, user_id: req.userId } })
             if (activeRound) {
                 const question = await getQuestion({ id: activeRound.last_question_id }, models.Question, models.Answer);
-                res.status(200).json({ data: question });
-            } else {
-                const question = await getQuestion({ lvl: 1 }, models.Question, models.Answer);
-                await models.Game.create({
-                    user_id: req.userIds,
-                    last_question_id: question.id
-                })
-                res.status(constants.successCode).json({ data: question });
+                return res.status(200).json({ data: question });
             }
+            const question = await getQuestion({ lvl: 1 }, models.Question, models.Answer);
+            await models.Game.create({
+                user_id: req.userIds,
+                last_question_id: question.id
+            })
+            return res.status(constants.successCode).json({ data: question });
+
 
         } catch (error) {
             this.errorHandler(error, res)
@@ -48,14 +48,14 @@ class GameController extends BaseController {
                 round.save();
                 return res.status(200).json({ data: question });
             }
-            if(awardNumber>1){
-            await Reward.create({
-                user_id: req.userId,
-                award: awardNumber
-            })
-            round.save();
-            return res.status(constants.successCode).json({ data: "Game ended" })
-        }
+            if (awardNumber > 1) {
+                await Reward.create({
+                    user_id: req.userId,
+                    award: awardNumber
+                })
+                round.save();
+                return res.status(constants.successCode).json({ data: "Game ended" })
+            }
 
         } catch (error) {
             this.errorHandler(error, res);
