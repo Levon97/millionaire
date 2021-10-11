@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Reward.hasMany(models.User, {foreignKey: 'user_id'});
+      Reward.hasMany(models.User, {foreignKey: 'id'});
     }
   };
   Reward.init({

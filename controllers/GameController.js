@@ -1,29 +1,24 @@
 const BaseController = require("./BaseController");
-const { Question, Answer, Game, Reward } = require('../models/index');
+const models = require('../models/index');
 const { getQuestion } = require("../services/gameServices");
-const {
-    awards,
-    firstImmutableQuestion,
-    secondImmutableQuestion,
-    lastQuestion
-} = require('../config/constants');
+const constants = require('../config/constants');
 
 class GameController extends BaseController {
     // Start game Function for /start-game
     startGame = async (req, res) => {
         try {
-            const user_id = req.userId;
-            const activeRound = await Game.findOne({ where: { active: true, user_id: user_id } })
+            
+            const activeRound = await models.Game.findOne({ where: { active: true, user_id: req.userId } })
             if (activeRound) {
-                const question = await getQuestion({ id: activeRound.last_question_id }, Question, Answer);
+                const question = await getQuestion({ id: activeRound.last_question_id }, models.Question, models.Answer);
                 res.status(200).json({ data: question });
             } else {
-                const question = await getQuestion({ lvl: 1 }, Question, Answer);
-                await Game.create({
-                    user_id: user_id,
+                const question = await getQuestion({ lvl: 1 }, models.Question, models.Answer);
+                await models.Game.create({
+                    user_id: req.userIds,
                     last_question_id: question.id
                 })
-                res.status(200).json({ data: question });
+                res.status(constants.successCode).json({ data: question });
             }
 
         } catch (error) {
@@ -32,14 +27,12 @@ class GameController extends BaseController {
     }
     answerCheck = async (req, res) => {
         try {
-            
-            const user_id = req.userId
             const submitedAnswer = req.body;
             // Query for finding submited answer
-            const answer = await Answer.findOne({ where: { id: submitedAnswer.id }, include: { model: Question } });
-            const awardNumber = awards[answer.Question.lvl / 5];
+            const answer = await models.Answer.findOne({ where: { id: submitedAnswer.id }, include: { model: models.Question } });
+            const awardNumber = constants.awards[Math.floor(answer.Question.lvl / 5)];
             // Query for deactivate / end game
-            const round = await Game.findOne({ where: { user_id: user_id } });
+            const round = await models.Game.findOne({ where: { user_id: req.userId } });
             round.active = false;
             if (!answer.response) {
                 // ending game
@@ -48,7 +41,7 @@ class GameController extends BaseController {
             }
 
             if (answer.response) {
-                const question = await getQuestion({ lvl: ((answer.Question.lvl) + 1) }, Question, Answer);
+                const question = await getQuestion({ lvl: ((answer.Question.lvl) + 1) }, models.Question, models.Answer);
                 // creating new checkpoint
                 round.active = true;
                 round.last_question_id = question.id;
@@ -57,11 +50,11 @@ class GameController extends BaseController {
             }
             if(awardNumber>1){
             await Reward.create({
-                user_id: user_id,
+                user_id: req.userId,
                 award: awardNumber
             })
             round.save();
-            return res.status(200).json({ data: "Game ended" })
+            return res.status(constants.successCode).json({ data: "Game ended" })
         }
 
         } catch (error) {

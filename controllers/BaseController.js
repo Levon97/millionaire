@@ -4,7 +4,6 @@ class BaseController {
         let code;
         let message;
         const name = err.name;
-        console.log(name);
         switch (name) {
             case "ValidationError":
                 code = 400;
@@ -22,15 +21,7 @@ class BaseController {
                 message = err.message || "Bad request"
                 break;
         }
-        this.resSender(code, { error: message }, res);
-    }
-s
-    resSender = (code, sendData, res) => {
-        return res.status(code).json(sendData);
-    }
-    
-    getQuestion = async (searchParamObj,Question,Answer) => {
-        return await Question.findOne({where: searchParamObj,include: {model: Answer.scope('withoutResponse')}})
+        res.status(code).json({error: message});
     }
 
 }
