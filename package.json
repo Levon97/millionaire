@@ -9,7 +9,7 @@
     "migrate": "sequelize-cli db:migrate",
     "unmigrate": "sequelize-cli db:migrate:undo:all",
     "seeders": "sequelize-cli db:seed:all",
-    "undo seeders": "npx sequelize-cli db:seed:undo:all"
+    "undo-seeders": "npx sequelize-cli db:seed:undo:all"
   },
   "author": "",
   "license": "ISC",

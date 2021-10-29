@@ -1,8 +1,6 @@
 const { Promise } = require('bluebird');
 const crypto = Promise.promisifyAll(require('crypto'));
 
-
-
 module.exports = class PassConverter {
     // hashing password and genereate salt 
     static hash = async (password) => {
@@ -17,4 +15,3 @@ module.exports = class PassConverter {
         return key === derivedKey;
     }
 }
-

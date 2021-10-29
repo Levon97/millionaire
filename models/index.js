@@ -15,8 +15,6 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
         idle: config.pool.idle
   }
 });
-
-
 // reading all the model files and storing them to db with calling function on it
 fs.readdirSync(__dirname)
   .filter((file) => {
@@ -35,5 +33,4 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
-
-module.exports = Object.assign(Sequelize, sequelize, db);
+module.exports = {...db,sequelize,QueryTypes};
