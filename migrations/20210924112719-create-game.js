@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Games', {
+    await queryInterface.createTable('games', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,32 +11,32 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
+          model: 'users',
            key: 'id'
          }
       },
       last_question_id: {
         type: Sequelize.INTEGER,
         references: {
-         model: 'Questions',
+         model: 'questions',
           key: 'id'
         }
       },
       active : {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: true
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Games');
+    await queryInterface.dropTable('games');
   }
 };

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Answer.hasOne(models.Question,{foreignKey: 'id'});
     }
   };
   Answer.init({
@@ -22,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     question_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'Question',
-        key: 'id'
-      }
     },
     content: {
       type: DataTypes.STRING
@@ -34,15 +30,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    }
   }, {
+    scopes: {
+      withoutResponse: {
+        attributes: { exclude: ['response'] },
+      }
+    },
+    underscored: true,
     sequelize,
     modelName: 'Answer',
   });

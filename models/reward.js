@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Reward.hasMany(models.User, {foreignKey: 'id'});
     }
   };
   Reward.init({
@@ -22,23 +22,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     user_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'User',
-        key: 'id'
-      }
     },  
     award: {
       type: DataTypes.STRING
     },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    }
   }, {
+    underscored: true,
     sequelize,
     modelName: 'Reward',
   });

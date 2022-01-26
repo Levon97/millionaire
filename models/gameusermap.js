@@ -22,27 +22,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     game_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'Game',
-        key: 'id'
-      }
     },
     question_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'Question',
-        key: 'id'
-      }
     },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    }
   }, {
+    underscored: true,
     sequelize,
     modelName: 'GameUserMap',
   });
